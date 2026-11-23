@@ -17,11 +17,6 @@ html.d-lock, html.d-lock body { overflow: hidden; }
 .d-root em { font-style: italic; color: var(--d-rose); }
 
 /* ---------- Primitivas de animación ---------- */
-.d-chars { display: inline-block; }
-.d-ch { display: inline-block; overflow: hidden; vertical-align: top; padding-top: 0.12em; margin-top: -0.12em; }
-.d-ch > span { display: inline-block; transform: translateY(112%); transition: transform 1.2s var(--d-ease); }
-.d-chars.is-on .d-ch > span { transform: none; }
-
 .d-mask { display: block; overflow: hidden; padding-block: 0.08em; margin-block: -0.08em; }
 .d-mask > span { display: block; transform: translateY(115%); transition: transform 1.2s var(--d-ease); }
 .d-mask.is-on > span { transform: none; }
@@ -207,9 +202,22 @@ span.d-mask, span.d-mask > span { display: block; }
 }
 @media (prefers-reduced-motion: reduce) {
   .d-root * { transition-duration: 0.01ms !important; animation: none !important; }
-  .d-ch > span, .d-mask > span { transform: none; }
+  .d-mask > span { transform: none; }
   .d-fade { opacity: 1; transform: none; }
   .d-statement__text span { opacity: 1; }
   .d-panel { clip-path: none; }
   .d-loader { display: none; }
 }
+
+/* Logo (Disruptiva) */
+.d-logo img { height: 40px; width: auto; display: block; filter: brightness(0) invert(0.96); transition: filter 0.5s var(--d-ease); }
+.d-bar.menu-open .d-logo img { filter: brightness(0) opacity(0.85); }
+.d-logo { margin-right: auto; line-height: 0; }
+.d-loader__logo { width: min(70vw, 560px); filter: brightness(0) invert(0.96); margin: 0 auto; clip-path: inset(0 100% 0 0); animation: d-wipe 1.3s var(--d-ease) 0.15s forwards; }
+@keyframes d-wipe { to { clip-path: inset(0); } }
+.d-hero__title { display: block; line-height: 0; margin-left: -0.5%; }
+.d-hero__logo { display: block; width: min(88vw, 940px, 84vh); clip-path: inset(0 100% 0 0); transition: clip-path 1.8s var(--d-ease) 0.35s; }
+.d-hero__logo img { width: 100%; height: auto; display: block; filter: brightness(0) invert(0.96); }
+.is-ready .d-hero__logo { clip-path: inset(0); }
+.d-hero__script { margin-left: 0 !important; }
+@media (prefers-reduced-motion: reduce) { .d-hero__logo, .d-loader__logo { clip-path: none; } }

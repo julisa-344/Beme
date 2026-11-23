@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 
-import { wa, MAPS, U, SERVICES, MARQUEE, PRINCIPLES, REVIEWS, FAQ, Arrow, Reveal } from './shared.jsx'
+import { wa, MAPS, U, SERVICES, MARQUEE, PRINCIPLES, REVIEWS, FAQ, Arrow, Reveal, logo } from './shared.jsx'
 
 const NAV = [
   ['Servicios', '#servicios'],
@@ -65,7 +65,7 @@ export default function App() {
   return (
     <>
       <nav className={`nav ${scrolled ? 'nav--solid' : ''}`}>
-        <a className="nav__brand" href="#top">BÉME</a>
+        <a className="nav__brand" href="#top"><img src={logo} alt="BÉME Beauty Studio" /></a>
         <ul>
           {NAV.map(([label, href]) => (
             <li key={href}><a className="link" href={href}>{label}</a></li>
@@ -85,8 +85,7 @@ export default function App() {
         </div>
 
         <p className="hero__eyebrow">Beauty Studio · Santiago de Surco, Lima</p>
-        <h1 className="hero__title">BÉME</h1>
-        <p className="hero__tag">Un espacio para ti.</p>
+        <h1 className="hero__title"><img className="hero__logo" src={logo} alt="BÉME Beauty Studio" /></h1>
         <div className="hero__actions">
           <a className="btn btn--dark" href="#reservar">Reservar cita <Arrow /></a>
           <a className="btn btn--ghost" href="#servicios">Ver servicios</a>
@@ -174,7 +173,6 @@ export default function App() {
         <section className="book" id="reservar">
           <div className="book__copy">
             <p className="eyebrow eyebrow--light">Reserva</p>
-            <h2 className="book__title">Un espacio para ti.</h2>
             <p>Cuéntanos qué te gustaría y te confirmamos tu horario por WhatsApp.</p>
             <ul className="book__info">
               <li>Av. Primavera 120, dpto. 501-2</li>
@@ -204,7 +202,7 @@ export default function App() {
 
       <footer className="footer">
         <div>
-          <a className="nav__brand" href="#top">BÉME BEAUTY STUDIO</a>
+          <a className="nav__brand" href="#top"><img src={logo} alt="BÉME Beauty Studio" /></a>
           <p className="footer__legal">BEME BEAUTY STUDIO S.A.C. · RUC 20615366669</p>
         </div>
         <a className="link" href={MAPS} target="_blank" rel="noopener">Santiago de Surco, Lima</a>

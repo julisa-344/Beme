@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
-import { wa, MAPS, U, SERVICES, PRINCIPLES, REVIEWS, FAQ, Arrow } from './shared.jsx'
+import { wa, MAPS, U, SERVICES, PRINCIPLES, REVIEWS, FAQ, Arrow, logo } from './shared.jsx'
 import './disruptiva.css'
 
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v))
@@ -33,19 +33,6 @@ function useInView(threshold = 0.2) {
     return () => io.disconnect()
   }, [threshold])
   return [ref, on]
-}
-
-/* Letras que suben desde una máscara */
-function Chars({ text, on, base = 0, step = 55 }) {
-  return (
-    <span className={`d-chars ${on ? 'is-on' : ''}`} aria-label={text}>
-      {[...text].map((ch, i) => (
-        <span className="d-ch" aria-hidden="true" key={i}>
-          <span style={{ transitionDelay: `${base + i * step}ms` }}>{ch === ' ' ? ' ' : ch}</span>
-        </span>
-      ))}
-    </span>
-  )
 }
 
 /* Línea que sube desde una máscara al entrar al viewport */
@@ -213,13 +200,13 @@ export default function Disruptiva() {
 
       {/* Preloader */}
       <div className="d-loader" aria-hidden="true">
-        <span className="d-loader__word"><Chars text="BÉME" on base={100} step={110} /></span>
+        <img className="d-loader__logo" src={logo} alt="BÉME Beauty Studio" />
         <span className="d-loader__sub">un espacio para ti</span>
       </div>
 
       {/* Header */}
       <header className={`d-bar ${menu ? 'menu-open' : ''}`}>
-        <a className="d-logo" href="#d-top">BÉME</a>
+        <a className="d-logo" href="#d-top"><img src={logo} alt="BÉME Beauty Studio" /></a>
         <a className="d-bar__book" href="#d-reservar">Reservar</a>
         <button className="d-menubtn" onClick={() => setMenu(!menu)} aria-expanded={menu}>
           {menu ? 'Cerrar' : 'Menú'}
@@ -245,10 +232,7 @@ export default function Disruptiva() {
         </div>
 
         <p className="d-hero__eyebrow">Beauty Studio · Santiago de Surco</p>
-        <h1 className="d-hero__title">
-          <span className="d-hero__line"><Chars text="BÉ" on={ready} base={200} step={120} /></span>
-          <span className="d-hero__line d-hero__line--2"><Chars text="ME" on={ready} base={420} step={120} /></span>
-        </h1>
+        <h1 className="d-hero__title"><span className="d-hero__logo"><img src={logo} alt="BÉME Beauty Studio" /></span></h1>
         <p className="d-hero__script"><Mask delay={900} className={ready ? 'is-on' : ''}>míra<em>me</em></Mask></p>
 
         <div className="d-hero__foot">

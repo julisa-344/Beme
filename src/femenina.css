@@ -157,3 +157,10 @@
 @media (prefers-reduced-motion: reduce) {
   .f-root * { transition-duration: 0.01ms !important; animation: none !important; }
 }
+
+/* Logo (Femenina) */
+.f-brand img { height: 34px; width: auto; display: block; }
+.f-footer .f-brand img { height: 56px; }
+.f-hero__title { line-height: 0; }
+.f-hero__logo { width: min(100%, 540px); max-height: 32vh; object-fit: contain; object-position: left center; }
+@media (max-width: 960px) { .f-hero__logo { object-position: center; max-height: 22vh; } }

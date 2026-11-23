@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
+import logoUrl from './assets/logo.png'
+
+export const logo = logoUrl
 
 export const WA = '51999999999' // TODO: número real de WhatsApp
 export const wa = (text) => `https://wa.me/${WA}?text=${encodeURIComponent(text)}`

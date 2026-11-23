@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Lenis from 'lenis'
-import { wa, MAPS, U, SERVICES, MARQUEE, PRINCIPLES, REVIEWS, FAQ, Arrow, Reveal } from './shared.jsx'
+import { wa, MAPS, U, SERVICES, MARQUEE, PRINCIPLES, REVIEWS, FAQ, Arrow, Reveal, logo } from './shared.jsx'
 import './femenina.css'
 
 const NAV = [
@@ -77,7 +77,7 @@ export default function Femenina() {
   return (
     <div className="f-root">
       <nav className={`f-nav ${scrolled ? 'f-nav--solid' : ''}`}>
-        <a className="f-brand" href="#f-top">BÉME</a>
+        <a className="f-brand" href="#f-top"><img src={logo} alt="BÉME Beauty Studio" /></a>
         <ul>
           {NAV.map(([label, href]) => (
             <li key={href}><a className="f-link" href={href}>{label}</a></li>
@@ -93,7 +93,7 @@ export default function Femenina() {
 
         <div className="f-hero__copy">
           <p className="f-eyebrow">Beauty Studio · Santiago de Surco</p>
-          <h1 className="f-hero__title">Béme</h1>
+          <h1 className="f-hero__title"><img className="f-hero__logo" src={logo} alt="BÉME Beauty Studio" /></h1>
           <p className="f-script">un espacio para ti</p>
           <div className="f-hero__actions">
             <a className="f-btn f-btn--solid" href="#f-reservar">Reservar cita <Arrow /></a>
@@ -199,7 +199,7 @@ export default function Femenina() {
 
       <footer className="f-footer">
         <div>
-          <a className="f-brand" href="#f-top">BÉME BEAUTY STUDIO</a>
+          <a className="f-brand" href="#f-top"><img src={logo} alt="BÉME Beauty Studio" /></a>
           <p>BEME BEAUTY STUDIO S.A.C. · RUC 20615366669</p>
         </div>
         <a className="f-link" href={MAPS} target="_blank" rel="noopener">Santiago de Surco, Lima</a>

@@ -172,3 +172,10 @@ button, input, select { font: inherit; color: inherit; }
 .switcher a { padding: 8px 16px; border-radius: 999px; color: #fbf3ec; opacity: 0.7; transition: background-color 0.4s, opacity 0.4s; }
 .switcher a.on { background: #fbf3ec; color: #3b3a34; opacity: 1; }
 @media (max-width: 640px) { .switcher { bottom: 78px; } }
+
+/* Logo (Lujo Editorial) */
+.nav__brand img { height: 40px; width: auto; display: block; filter: brightness(0) invert(0.96); transition: filter 0.6s var(--ease), height 0.6s var(--ease); }
+.nav--solid .nav__brand img { filter: none; height: 34px; }
+.hero__title { line-height: 0; margin: 0; }
+.hero__logo { width: min(78vw, 760px); max-height: 36vh; object-fit: contain; filter: brightness(0) invert(0.96); }
+.footer .nav__brand img { height: 52px; filter: none; }
