@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import logoUrl from './assets/logo.png'
+import img_cabello from './assets/cabello.webp'
+import img_manos from './assets/manos.webp'
+import img_cejas from './assets/cejas.webp'
+import img_maquillaje from './assets/maquillaje.webp'
+import img_pigmentacion from './assets/pigmentacion.webp'
+import img_depilacion from './assets/depilacion.webp'
 
 import heroVideoUrl from './assets/hero.mp4'
 
@@ -15,12 +21,12 @@ export const U = (id, w = 900) =>
 
 // Contenido tomado del brochure institucional. Las fotos son provisionales.
 export const SERVICES = [
-  { name: 'Cabello', desc: 'Cortes, peinados, color, balayage, alisados, tratamientos capilares, extensiones y pelucas.', img: U('photo-1560066984-138dadb4c035'), speed: 0.06, offset: 0 },
-  { name: 'Manos y pies', desc: 'Manicure tradicional, gel, rubber, dip powder, polygel, uñas acrílicas, diseños y pedicure.', img: U('photo-1604654894610-df63bc536371'), speed: -0.05, offset: 90 },
-  { name: 'Cejas y pestañas', desc: 'Diseño, perfilado, laminado, henna, lifting, tinturado y extensiones de pestañas.', img: U('photo-1583001931096-959e9a1a6223'), speed: 0.09, offset: 40 },
-  { name: 'Maquillaje', desc: 'Maquillaje social y aplicación de pestañas para celebraciones y ocasiones especiales.', img: U('photo-1522337360788-8b13dee7a37e'), speed: -0.07, offset: 40 },
-  { name: 'Pigmentación', desc: 'Microblading, shading, microshading, Full Lips y microdelineado.', img: U('photo-1596462502278-27bfdc403348'), speed: 0.05, offset: 0 },
-  { name: 'Depilación', desc: 'Bozo, patillas, rostro y zonas específicas según el servicio solicitado.', img: U('photo-1570172619644-dfd03ed5d881'), speed: -0.08, offset: 90 },
+  { name: 'Cabello', catalog: 'cabello', desc: 'Cortes, peinados, color, balayage, alisados, tratamientos capilares, extensiones y pelucas.', img: img_cabello, speed: 0.06, offset: 0 },
+  { name: 'Manos y pies', catalog: 'manos-pies', desc: 'Manicure tradicional, gel, rubber, dip powder, polygel, uñas acrílicas, diseños y pedicure.', img: img_manos, speed: -0.05, offset: 90 },
+  { name: 'Cejas y pestañas', catalog: 'cejas-pestanas', desc: 'Diseño, perfilado, laminado, henna, lifting, tinturado y extensiones de pestañas.', img: img_cejas, speed: 0.09, offset: 40 },
+  { name: 'Maquillaje', catalog: 'cabello', desc: 'Maquillaje social y aplicación de pestañas para celebraciones y ocasiones especiales.', img: img_maquillaje, speed: -0.07, offset: 40 },
+  { name: 'Pigmentación', catalog: 'micropigmentacion', desc: 'Microblading, shading, microshading, Full Lips y microdelineado.', img: img_pigmentacion, speed: 0.05, offset: 0 },
+  { name: 'Depilación', catalog: 'depilacion', desc: 'Bozo, patillas, rostro y zonas específicas según el servicio solicitado.', img: img_depilacion, speed: -0.08, offset: 90 },
 ]
 
 export const MARQUEE = SERVICES.map((s) => s.name)
@@ -72,14 +78,3 @@ export function Reveal({ children, className = '', delay = 0, as: Tag = 'div' })
 }
 
 
-// Detalle de cada servicio (del brochure). Para mostrar un precio, agrega el
-// nombre exacto del ítem aquí, p. ej. 'Corte': 'S/ 60'. Sin precio → "Consultar".
-export const SERVICE_ITEMS = {
-  'Cabello': ['Cortes', 'Peinados', 'Color', 'Balayage', 'Alisados', 'Tratamientos capilares', 'Extensiones', 'Pelucas'],
-  'Manos y pies': ['Manicure tradicional', 'Gel', 'Rubber', 'Dip powder', 'Polygel', 'Uñas acrílicas', 'Diseños', 'Pedicure'],
-  'Cejas y pestañas': ['Diseño', 'Perfilado', 'Laminado', 'Henna', 'Lifting', 'Tinturado', 'Extensiones de pestañas'],
-  'Maquillaje': ['Maquillaje social', 'Aplicación de pestañas'],
-  'Pigmentación': ['Microblading', 'Shading', 'Microshading', 'Full Lips', 'Microdelineado'],
-  'Depilación': ['Bozo', 'Patillas', 'Rostro', 'Zonas específicas'],
-}
-export const PRICES = {}

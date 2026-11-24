@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
-import { wa, MAPS, SERVICES, SERVICE_ITEMS, PRICES, PRINCIPLES, REVIEWS, FAQ, Arrow, logo, heroVideo } from './shared.jsx'
+import { wa, MAPS, SERVICES, PRINCIPLES, REVIEWS, FAQ, Arrow, logo, heroVideo } from './shared.jsx'
 import './disruptiva.css'
 
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v))
@@ -10,6 +10,7 @@ const MENU = [
   ['Esencia', '#d-esencia'],
   ['Opiniones', '#d-opiniones'],
   ['Preguntas', '#d-faq'],
+  ['Precios', '/?v=disruptiva&page=precios'],
   ['Reservar', '#d-reservar'],
 ]
 
@@ -48,14 +49,13 @@ function Fade({ children, className = '', delay = 0, as: Tag = 'div' }) {
   )
 }
 
-const FONTS = ['italiana', 'gilda', 'cormorant']
+const FONTS = ['quicksand', 'jost', 'poiret', 'marcellus', 'cormorant']
 
 export default function Disruptiva() {
   const fontParam = new URLSearchParams(window.location.search).get('font')
   const fontClass = FONTS.includes(fontParam) ? `d-font-${fontParam}` : ''
   const [ready, setReady] = useState(false)
   const [menu, setMenu] = useState(false)
-  const [priceOf, setPriceOf] = useState(null)
   const [form, setForm] = useState({ nombre: '', servicio: SERVICES[0].name, fecha: '' })
   const root = useRef(null)
   const lenisRef = useRef(null)
@@ -69,9 +69,9 @@ export default function Disruptiva() {
   }, [])
 
   useEffect(() => {
-    document.documentElement.classList.toggle('d-lock', menu || !!priceOf || !ready)
+    document.documentElement.classList.toggle('d-lock', menu || !ready)
     return () => document.documentElement.classList.remove('d-lock')
-  }, [menu, priceOf, ready])
+  }, [menu, ready])
 
   /* Scroll: parallax, texto "scrubbed", paneles con clip-path, cintillo ligado al scroll */
   useEffect(() => {
@@ -128,14 +128,10 @@ export default function Disruptiva() {
     }
   }, [])
 
-  /* Pausar el scroll suave con menú o modal abiertos; Esc cierra el modal */
+  /* Pausar el scroll suave con el menú abierto */
   useEffect(() => {
-    lenisRef.current?.[menu || priceOf ? 'stop' : 'start']()
-    if (!priceOf) return
-    const onKey = (e) => e.key === 'Escape' && setPriceOf(null)
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [menu, priceOf])
+    lenisRef.current?.[menu ? 'stop' : 'start']()
+  }, [menu])
 
   /* Cursor propio + botones magnéticos + preview de servicios */
   useEffect(() => {
@@ -224,7 +220,11 @@ export default function Disruptiva() {
           <div className="d-hero__shade" />
         </div>
 
-        <h1 className="d-hero__title"><span className="d-hero__logo"><img src={logo} alt="BÉME Beauty Studio" /></span></h1>
+        <h1 className="d-hero__title" aria-label="BÉME">
+          <span className="d-hero__line" aria-hidden="true"><span>BÉ</span></span>
+          <span className="d-hero__line d-hero__line--2" aria-hidden="true"><span>ME</span></span>
+        </h1>
+        <p className="d-hero__sub">Beauty Studio</p>
 
         <div className="d-hero__foot">
           <a className="d-btn" data-magnetic href="#d-reservar">Reservar cita <Arrow /></a>
@@ -266,10 +266,9 @@ export default function Disruptiva() {
                   <h3>{s.name}</h3>
                   <p className="d-card__desc">{s.desc}</p>
                   <div className="d-card__actions">
-                    <a className="d-btn d-btn--sand d-btn--sm" data-magnetic href={wa(`Hola BÉME, quisiera reservar ${s.name}.`)} target="_blank" rel="noopener">
-                      Reservar <Arrow />
+                    <a className="d-btn d-btn--sand d-btn--sm" data-magnetic href={`/?v=disruptiva&page=precios&cat=${s.catalog}`}>
+                      Ver servicios y precios <Arrow />
                     </a>
-                    <button className="d-pricebtn" type="button" onClick={() => setPriceOf(s)}>Ver precios</button>
                   </div>
                 </div>
               </div>
@@ -357,28 +356,6 @@ export default function Disruptiva() {
           <button className="d-btn d-btn--sand" data-magnetic type="submit">Reservar por WhatsApp <Arrow /></button>
         </form>
       </section>
-
-      {/* Modal: ver precios */}
-      <div className={`d-modal ${priceOf ? 'is-open' : ''}`} onClick={(e) => e.target === e.currentTarget && setPriceOf(null)} aria-hidden={!priceOf} data-lenis-prevent>
-        {priceOf && (
-          <div className="d-modal__panel" role="dialog" aria-modal="true" aria-label={`Precios de ${priceOf.name}`}>
-            <div className="d-modal__head">
-              <h3>{priceOf.name}</h3>
-              <button className="d-modal__close" type="button" onClick={() => setPriceOf(null)} aria-label="Cerrar">×</button>
-            </div>
-            <ul>
-              {(SERVICE_ITEMS[priceOf.name] || []).map((it) => (
-                <li key={it}><span>{it}</span><span>{PRICES[it] ?? 'Consultar'}</span></li>
-              ))}
-            </ul>
-            <p className="d-modal__note">Los precios se confirman según tu caso. Escríbenos y te respondemos por WhatsApp.</p>
-            <div className="d-modal__actions">
-              <a className="d-btn d-btn--sand d-btn--sm" href={wa(`Hola BÉME, quisiera reservar ${priceOf.name}.`)} target="_blank" rel="noopener">Reservar <Arrow /></a>
-              <a className="d-btn d-btn--line d-btn--sm" href={wa(`Hola BÉME, ¿me compartes los precios de ${priceOf.name}?`)} target="_blank" rel="noopener">Consultar precios</a>
-            </div>
-          </div>
-        )}
-      </div>
 
       <footer className="d-footer">
         <span>BEME BEAUTY STUDIO S.A.C. · RUC 20615366669</span>
