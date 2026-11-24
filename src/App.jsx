@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 
-import { wa, MAPS, U, SERVICES, MARQUEE, PRINCIPLES, REVIEWS, FAQ, Arrow, Reveal, logo } from './shared.jsx'
+import { wa, MAPS, SERVICES, MARQUEE, PRINCIPLES, REVIEWS, FAQ, Arrow, Reveal, logo, heroVideo } from './shared.jsx'
 
 const NAV = [
   ['Servicios', '#servicios'],
@@ -76,11 +76,7 @@ export default function App() {
 
       <header className="hero" id="top">
         <div className="hero__media">
-          <div
-            ref={heroImg}
-            className="hero__img"
-            style={{ backgroundImage: `url(${U('photo-1515377905703-c4788e51af15', 1800)})` }}
-          />
+          <video ref={heroImg} className="hero__img" src={heroVideo} autoPlay muted loop playsInline preload="auto" aria-hidden="true" />
           <div className="hero__veil" />
         </div>
 

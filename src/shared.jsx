@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import logoUrl from './assets/logo.png'
 
+import heroVideoUrl from './assets/hero.mp4'
+
 export const logo = logoUrl
+export const heroVideo = heroVideoUrl
 
 export const WA = '51999999999' // TODO: número real de WhatsApp
 export const wa = (text) => `https://wa.me/${WA}?text=${encodeURIComponent(text)}`
@@ -68,3 +71,15 @@ export function Reveal({ children, className = '', delay = 0, as: Tag = 'div' })
   )
 }
 
+
+// Detalle de cada servicio (del brochure). Para mostrar un precio, agrega el
+// nombre exacto del ítem aquí, p. ej. 'Corte': 'S/ 60'. Sin precio → "Consultar".
+export const SERVICE_ITEMS = {
+  'Cabello': ['Cortes', 'Peinados', 'Color', 'Balayage', 'Alisados', 'Tratamientos capilares', 'Extensiones', 'Pelucas'],
+  'Manos y pies': ['Manicure tradicional', 'Gel', 'Rubber', 'Dip powder', 'Polygel', 'Uñas acrílicas', 'Diseños', 'Pedicure'],
+  'Cejas y pestañas': ['Diseño', 'Perfilado', 'Laminado', 'Henna', 'Lifting', 'Tinturado', 'Extensiones de pestañas'],
+  'Maquillaje': ['Maquillaje social', 'Aplicación de pestañas'],
+  'Pigmentación': ['Microblading', 'Shading', 'Microshading', 'Full Lips', 'Microdelineado'],
+  'Depilación': ['Bozo', 'Patillas', 'Rostro', 'Zonas específicas'],
+}
+export const PRICES = {}
