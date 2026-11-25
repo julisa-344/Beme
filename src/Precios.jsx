@@ -1,9 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import CategoryNav from './components/precios/CategoryNav.jsx'
-import FilterPanel from './components/precios/FilterPanel.jsx'
 import ServiceTable from './components/precios/ServiceTable.jsx'
-import { CATALOG, getCategory, flattenItems, groupTitles } from './data/catalog.js'
-import { INITIAL_FILTERS, filterItems } from './lib/filters.js'
+import { CATALOG, getCategory, flattenItems } from './data/catalog.js'
 import { logo, wa, MAPS, Arrow } from './shared.jsx'
 import './disruptiva.css'
 import './precios.css'
@@ -12,20 +10,13 @@ const readCategory = () => getCategory(new URLSearchParams(window.location.searc
 
 export default function Precios() {
   const [activeId, setActiveId] = useState(readCategory)
-  const [filters, setFilters] = useState(INITIAL_FILTERS)
   const category = getCategory(activeId)
 
-  const all = useMemo(() => flattenItems(category), [category])
-  const groups = useMemo(() => groupTitles(category), [category])
-  const items = useMemo(() => filterItems(all, filters), [all, filters])
+  const items = useMemo(() => flattenItems(category), [category])
 
-  const setFilter = (key, value) => setFilters((f) => ({ ...f, [key]: value }))
-  const reset = () => setFilters(INITIAL_FILTERS)
-
-  // Al cambiar de categoría se limpian los filtros y se guarda ?cat= en la URL (enlace compartible).
+  // Al cambiar de categoría se guarda ?cat= en la URL (enlace compartible).
   const select = (id) => {
     setActiveId(id)
-    reset()
     const url = new URL(window.location.href)
     url.searchParams.set('cat', id)
     window.history.replaceState(null, '', url)
@@ -34,8 +25,6 @@ export default function Precios() {
   useEffect(() => {
     document.title = `${category.label} · Servicios y precios | BÉME Beauty Studio`
   }, [category.label])
-
-  const grouped = groups.length > 0 && filters.group === 'all' && filters.sort === 'default'
 
   return (
     <div className="d-root is-ready p-page">
@@ -51,31 +40,18 @@ export default function Precios() {
         <aside className="p-aside">
           <p className="p-eyebrow">Servicios y precios</p>
           <CategoryNav categories={CATALOG} activeId={category.id} onChange={select} />
-          <FilterPanel filters={filters} groups={groups} onChange={setFilter} onReset={reset} />
         </aside>
 
         <main className="p-main">
           <div className="p-head">
             <h1 className="p-title">{category.label}</h1>
             <p className="p-meta" aria-live="polite">
-              {items.length === all.length
-                ? `${all.length} servicios`
-                : `${items.length} de ${all.length} servicios`}
+              {items.length} servicios
             </p>
           </div>
 
           <div id="p-panel" role="tabpanel" aria-labelledby={`tab-${category.id}`} key={category.id} className="p-panel">
-            {items.length > 0 ? (
-              <ServiceTable items={items} categoryLabel={category.label} grouped={grouped} />
-            ) : (
-              <div className="p-empty">
-                <p>No encontramos servicios con esos filtros.</p>
-                <button type="button" className="p-reset" onClick={reset}>Limpiar filtros</button>
-                <a className="p-row__book" href={wa(`Hola BÉME, busco un servicio de ${category.label} y no lo veo en la lista.`)} target="_blank" rel="noopener">
-                  Consultar por WhatsApp <Arrow />
-                </a>
-              </div>
-            )}
+            <ServiceTable items={items} categoryLabel={category.label} grouped />
           </div>
 
           <p className="p-note">

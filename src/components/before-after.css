@@ -1,0 +1,16 @@
+.ba { --pos: 50%; position: relative; width: 100%; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 240px 240px 20px 20px; background: #d9c3ad; cursor: ew-resize; touch-action: pan-y; user-select: none; -webkit-user-select: none; box-shadow: 0 30px 70px rgba(92, 63, 44, 0.22); }
+.ba__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+/* "Antes" se recorta desde la derecha hasta la barra */
+.ba__before { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+/* Mientras no exista la foto real de "antes", se atenúa la de "después" */
+.ba__before.is-placeholder { filter: grayscale(0.85) contrast(0.85) brightness(0.92) blur(1.5px); }
+
+.ba__line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: #fbf3ec; box-shadow: 0 0 18px rgba(0, 0, 0, 0.25); pointer-events: none; }
+.ba__knob { position: absolute; top: 50%; left: var(--pos); width: 58px; height: 58px; margin: -29px 0 0 -29px; display: grid; place-items: center; border-radius: 50%; background: #fbf3ec; color: #3b2b24; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28); cursor: grab; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.4s; }
+.ba:active .ba__knob { cursor: grabbing; transform: scale(1.1); }
+.ba__knob:hover { background: #d4a373; }
+.ba__knob:focus-visible { outline: 3px solid #d4a373; outline-offset: 4px; }
+
+.ba__tag { position: absolute; bottom: 22px; padding: 7px 16px; border-radius: 999px; background: rgba(59, 43, 36, 0.55); backdrop-filter: blur(6px); color: #fbf3ec; font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; pointer-events: none; }
+.ba__tag--l { left: 22px; }
+.ba__tag--r { right: 22px; }

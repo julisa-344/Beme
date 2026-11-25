@@ -178,7 +178,3 @@ export const flattenItems = (category) =>
   category.groups
     .flatMap((g) => g.items.map((it) => ({ ...it, group: g.title ?? null })))
     .map((it, i) => ({ ...it, n: i + 1 }))
-
-/** Nombres de subcategoría (solo si la categoría tiene más de un grupo). */
-export const groupTitles = (category) =>
-  category.groups.length > 1 ? category.groups.map((g) => g.title) : []

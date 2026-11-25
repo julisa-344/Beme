@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import { wa, MAPS, SERVICES, PRINCIPLES, REVIEWS, FAQ, Arrow, logo, heroVideo } from './shared.jsx'
+import BeforeAfter from './components/BeforeAfter.jsx'
+import { RESULTS } from './data/results.js'
+import { HERO_LETTERS } from './data/heroLetters.js'
 import './disruptiva.css'
 
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v))
 
 const MENU = [
   ['Servicios', '#d-servicios'],
-  ['Esencia', '#d-esencia'],
+  ['Resultados', '#d-resultados'],
   ['Opiniones', '#d-opiniones'],
   ['Preguntas', '#d-faq'],
   ['Precios', '/?v=disruptiva&page=precios'],
@@ -49,6 +52,19 @@ function Fade({ children, className = '', delay = 0, as: Tag = 'div' }) {
   )
 }
 
+/** Letras de la marca (PNG como máscara). `start` mantiene el escalonado de la animación. */
+function HeroLetters({ letters, start = 0, className = '' }) {
+  return (
+    <span className={`d-hero__line ${className}`} aria-hidden="true">
+      {letters.map((l, i) => (
+        <span className="d-hl" key={l.char}>
+          <i className="d-letter" style={{ '--h': l.h, '--ar': l.ar, '--img': `url(${l.img})`, '--i': start + i }} />
+        </span>
+      ))}
+    </span>
+  )
+}
+
 const FONTS = ['quicksand', 'jost', 'poiret', 'marcellus', 'cormorant']
 
 export default function Disruptiva() {
@@ -59,6 +75,8 @@ export default function Disruptiva() {
   const [form, setForm] = useState({ nombre: '', servicio: SERVICES[0].name, fecha: '' })
   const root = useRef(null)
   const lenisRef = useRef(null)
+  const [resultId, setResultId] = useState(RESULTS[0].id)
+  const result = RESULTS.find((r) => r.id === resultId)
   const cursor = useRef(null)
 
   /* Preloader */
@@ -93,6 +111,7 @@ export default function Disruptiva() {
 
       if (hero) hero.style.transform = `translate3d(0, ${y * 0.2}px, 0) scale(${1 + Math.min(y / vh, 1) * 0.08})`
 
+      for (const el of q('[data-hero-y]')) el.style.transform = `translate3d(0, ${(y * Number(el.dataset.heroY)).toFixed(1)}px, 0)`
       for (const el of parallax) {
         const r = el.parentElement.getBoundingClientRect()
         el.style.transform = `translate3d(0, ${(-(r.top + r.height / 2 - vh / 2) * Number(el.dataset.dSpeed)).toFixed(1)}px, 0)`
@@ -221,14 +240,13 @@ export default function Disruptiva() {
         </div>
 
         <h1 className="d-hero__title" aria-label="BÉME">
-          <span className="d-hero__line" aria-hidden="true"><span>BÉ</span></span>
-          <span className="d-hero__line d-hero__line--2" aria-hidden="true"><span>ME</span></span>
+          <HeroLetters letters={HERO_LETTERS.slice(0, 2)} />
+          <HeroLetters letters={HERO_LETTERS.slice(2)} start={2} className="d-hero__line--2" />
         </h1>
-        <p className="d-hero__sub">Beauty Studio</p>
 
         <div className="d-hero__foot">
-          <a className="d-btn" data-magnetic href="#d-reservar">Reservar cita <Arrow /></a>
           <span className="d-scroll">Scroll<i /></span>
+          <a className="d-btn" data-magnetic href="#d-reservar">Reservar cita <Arrow /></a>
         </div>
       </section>
 
@@ -274,6 +292,35 @@ export default function Disruptiva() {
               </div>
             </article>
           ))}
+        </div>
+      </section>
+
+      {/* Antes y después: comparador con barra arrastrable */}
+      <section className="d-results" id="d-resultados">
+        <div className="d-results__copy">
+          <Mask as="p" className="d-eyebrow">Resultados</Mask>
+          <Mask as="h2" className="d-h2">Antes y <em>después</em></Mask>
+          <Fade as="p" className="d-results__hint">Desliza la barra para ver la transformación.</Fade>
+          <div className="d-results__tabs" role="tablist" aria-label="Elegir resultado">
+            {RESULTS.map((r) => (
+              <button
+                key={r.id}
+                type="button"
+                role="tab"
+                aria-selected={r.id === resultId}
+                className={`d-results__tab ${r.id === resultId ? 'is-on' : ''}`}
+                onClick={() => setResultId(r.id)}
+              >
+                {r.label}
+              </button>
+            ))}
+          </div>
+          <a className="d-btn d-btn--sand d-btn--sm" data-magnetic href={`/?v=disruptiva&page=precios&cat=${result.catalog}`}>
+            Ver servicios y precios <Arrow />
+          </a>
+        </div>
+        <div className="d-results__view">
+          <BeforeAfter key={result.id} before={result.before} after={result.after} placeholder={!result.before} alt={result.label} />
         </div>
       </section>
 
